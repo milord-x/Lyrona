@@ -1,0 +1,19 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "lyrona"
+version = "0.1.0"
+description = "Terminal music player with karaoke typing effect"
+requires-python = ">=3.11"
+dependencies = [
+    "mutagen",
+    "python-vlc",
+]
+
+[project.scripts]
+lyrona = "app:main"
+
+[tool.setuptools]
+py-modules = ["app", "display", "timing"]

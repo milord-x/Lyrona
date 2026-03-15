@@ -1,0 +1,4 @@
+mutagen
+python-vlc
+setuptools>=68
+wheel
