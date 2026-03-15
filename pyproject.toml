@@ -13,6 +13,11 @@ dependencies = [
     "python-vlc",
 ]
 
+[project.optional-dependencies]
+build = [
+    "pyinstaller>=6.0",
+]
+
 [project.urls]
 Homepage = "https://github.com/milord-x/lyrona"
 Repository = "https://github.com/milord-x/lyrona"
@@ -21,4 +26,4 @@ Repository = "https://github.com/milord-x/lyrona"
 lyrona = "lyrona:main"
 
 [tool.setuptools]
-py-modules = ["app", "display", "lyrona", "paths", "timing"]
+py-modules = ["app", "display", "lyrona", "paths", "timing", "vlc_runtime"]

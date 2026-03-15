@@ -19,6 +19,7 @@ except ImportError:
 from display import TerminalKaraokeDisplay, TerminalSongSelector, _RawTerminal
 from paths import DATA_DIR, METADATA_CACHE_PATH, SONGS_DIR, ensure_data_dirs
 from timing import build_payload, build_word_timings, group_words_by_line, parse_lrc_lines
+from vlc_runtime import configure_bundled_vlc
 
 SONG_METADATA_FILENAME = "metadata.json"
 CACHE_VERSION = 1
@@ -576,13 +577,17 @@ def choose_song_interactively(songs: List[Song]) -> Optional[Song]:
     return selector.select([song.title for song in songs], songs)
 
 
-def load_vlc_module() -> Any:
+def load_vlc_module() -> Tuple[Any, Optional[str]]:
+    configure_bundled_vlc()
+
     try:
         import vlc
     except ImportError:
-        return None
+        return None, "python-vlc is not installed."
+    except OSError as exc:
+        return None, f"VLC runtime could not be loaded: {exc}"
 
-    return vlc
+    return vlc, None
 
 
 def create_vlc_player(vlc_module: Any, audio_path: Path) -> Any:
@@ -594,9 +599,10 @@ def create_vlc_player(vlc_module: Any, audio_path: Path) -> Any:
 
 
 def play_song(song: Song) -> int:
-    vlc_module = load_vlc_module()
+    vlc_module, vlc_error = load_vlc_module()
     if vlc_module is None:
-        print("python-vlc is not installed. Run `pip install -r requirements.txt` first.")
+        print(vlc_error or "VLC runtime is not available.")
+        print("Install VLC or use a release archive that bundles the VLC runtime.")
         return 1
 
     metadata: Dict[str, str] = {}

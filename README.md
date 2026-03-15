@@ -7,6 +7,21 @@ Terminal music player with a karaoke typing effect.
 If you only cloned the repository, the `lyrona` command does not exist yet.
 You need to install Lyrona as a CLI application.
 
+### Download a ready binary
+
+If you do not want Python on the target machine, use the standalone Linux build from GitHub Releases.
+
+After downloading the archive:
+
+```bash
+tar -xzf lyrona-linux-x86_64.tar.gz
+cd lyrona-linux-x86_64
+./lyrona --help
+```
+
+This build bundles Python, `python-vlc`, `libvlc`, and VLC plugins.
+It is currently set up for Linux releases.
+
 ### Install as an app from GitHub
 
 Recommended with `uv`:
@@ -62,6 +77,36 @@ Then run the command inside the activated environment:
 ```bash
 lyrona
 lyrona "Washing Machine Heart"
+```
+
+## Build Standalone Release
+
+To build the Linux standalone archive locally:
+
+```bash
+python -m pip install ".[build]"
+python scripts/build_standalone.py
+```
+
+The builder expects a local VLC runtime to exist under `/usr/lib/...`.
+It outputs a release archive in `dist/`, for example:
+
+```bash
+dist/lyrona-linux-x86_64.tar.gz
+```
+
+## GitHub Releases
+
+This repository includes a GitHub Actions workflow that builds a Linux standalone archive.
+
+- `workflow_dispatch`: manual build from Actions tab
+- `push` tag `v*`: build and upload the archive to GitHub Releases
+
+Example:
+
+```bash
+git tag v0.1.1
+git push origin v0.1.1
 ```
 
 ## Commands
