@@ -112,6 +112,18 @@ Or import with lyrics in one step:
 lyrona import "/path/to/song.mp3" --lyrics "/path/to/song.lrc"
 ```
 
+## Quick playback flow
+
+A short end-to-end demo looks like this:
+
+```bash
+lyrona import "/path/to/song.mp3" --lyrics "/path/to/song.lrc"
+lyrona list
+lyrona "Song Name"
+```
+
+That is enough to import a local track, confirm it is in the library, and start playback from the terminal.
+
 ## Commands
 
 ```bash
